@@ -1,31 +1,28 @@
 """Rule for merging NeoForm and official Minecraft mappings."""
 
+load(":runner.bzl", "JAVA_RUNTIME_TOOLCHAIN", "run_java_jar")
+
 def _merge_mappings_impl(ctx):
     output = ctx.actions.declare_file(ctx.label.name + ".tsrg")
-    java_runtime = ctx.toolchains["@bazel_tools//tools/jdk:runtime_toolchain_type"].java_runtime
 
-    args = ctx.actions.args()
-    args.add("-jar")
-    args.add(ctx.file._tool)
-    args.add_all([
-        "--task",
-        "MERGE_MAPPING",
-        "--left",
-        ctx.file.mappings,
-        "--right",
-        ctx.file.official,
-        "--right-names",
-        "right,left",
-        "--classes",
-        "--fields",
-        "--methods",
-        "--output",
-        output,
-    ])
-
-    ctx.actions.run(
-        executable = java_runtime.java_executable_exec_path,
-        arguments = [args],
+    run_java_jar(
+        ctx = ctx,
+        jar = ctx.file._tool,
+        arguments = [
+            "--task",
+            "MERGE_MAPPING",
+            "--left",
+            ctx.file.mappings,
+            "--right",
+            ctx.file.official,
+            "--right-names",
+            "right,left",
+            "--classes",
+            "--fields",
+            "--methods",
+            "--output",
+            output,
+        ],
         inputs = [
             ctx.file.mappings,
             ctx.file.official,
@@ -33,7 +30,6 @@ def _merge_mappings_impl(ctx):
         mnemonic = "NeoFormMergeMappings",
         outputs = [output],
         progress_message = "Merging NeoForm and official mappings for %{label}",
-        tools = [ctx.file._tool, java_runtime.files],
     )
 
     return DefaultInfo(files = depset([output]))
@@ -55,5 +51,5 @@ merge_mappings = rule(
             default = Label("@rules_neoforge_tools//:net_neoforged_installertools_installertools_fatjar"),
         ),
     },
-    toolchains = ["@bazel_tools//tools/jdk:runtime_toolchain_type"],
+    toolchains = [JAVA_RUNTIME_TOOLCHAIN],
 )
