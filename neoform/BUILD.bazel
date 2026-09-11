@@ -1,1 +1,4 @@
-exports_files(["repository.bzl"])
+exports_files([
+    "bundle_extract.bzl",
+    "repository.bzl",
+])

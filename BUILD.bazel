@@ -1,1 +1,8 @@
+load("//neoform:bundle_extract.bzl", "bundle_extract")
+
 exports_files(["rules_neoforge_tools_install.json"])
+
+bundle_extract(
+    name = "extract_server",
+    src = "@minecraft_1_21_1//:downloads/server.jar",
+)
