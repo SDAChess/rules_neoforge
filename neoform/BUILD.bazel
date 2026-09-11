@@ -1,5 +1,6 @@
 exports_files([
     "bundle_extract.bzl",
+    "merge.bzl",
     "repository.bzl",
     "split.bzl",
 ])

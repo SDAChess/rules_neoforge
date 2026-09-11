@@ -1,4 +1,5 @@
 load("//neoform:bundle_extract.bzl", "bundle_extract")
+load("//neoform:merge.bzl", "merge_jars")
 load("//neoform:split.bzl", "split_jar")
 
 exports_files(["rules_neoforge_tools_install.json"])
@@ -20,4 +21,11 @@ split_jar(
     src = ":extract_server",
     classes = "server_classes.jar",
     resources = "server_resources.jar",
+)
+
+merge_jars(
+    name = "merge",
+    client = ":client_classes.jar",
+    server = ":server_classes.jar",
+    version = "1.21.1",
 )
