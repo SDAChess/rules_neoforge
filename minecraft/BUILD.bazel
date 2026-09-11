@@ -1,4 +1,5 @@
 exports_files([
+    "download.bzl",
     "extensions.bzl",
     "repository.bzl",
 ])

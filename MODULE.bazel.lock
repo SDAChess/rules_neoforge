@@ -190,7 +190,7 @@
   "moduleExtensions": {
     "//minecraft:extensions.bzl%minecraft": {
       "general": {
-        "bzlTransitiveDigest": "pxQiLuWhnke0fph7rRtSfT2m2RfmW/9HfYgGKeQmT7k=",
+        "bzlTransitiveDigest": "ik4jwkFTqVHRdgWh7WsjaQdeZIoZlGQ4Oxh6pr2C4/I=",
         "usagesDigest": "b1i3poB28IGK06SoGkg9C1O7MXrWrZIvNfczqzfFURk=",
         "recordedInputs": [],
         "generatedRepoSpecs": {
