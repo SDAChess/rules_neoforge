@@ -1,5 +1,6 @@
 load("//neoform:bundle_extract.bzl", "bundle_extract")
 load("//neoform:merge.bzl", "merge_jars")
+load("//neoform:merge_mappings.bzl", "merge_mappings")
 load("//neoform:split.bzl", "split_jar")
 
 exports_files(["rules_neoforge_tools_install.json"])
@@ -28,4 +29,10 @@ merge_jars(
     client = ":client_classes.jar",
     server = ":server_classes.jar",
     version = "1.21.1",
+)
+
+merge_mappings(
+    name = "merge_mappings",
+    mappings = "@neoform//:config/joined.tsrg",
+    official = "@minecraft_1_21_1//:downloads/client.txt",
 )

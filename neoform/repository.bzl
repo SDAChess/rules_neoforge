@@ -10,7 +10,7 @@ def _neoform_repository_impl(repository_ctx):
 
     repository_ctx.file(
         "BUILD.bazel",
-        'exports_files(["config.json"], visibility = ["//visibility:public"])\n',
+        'exports_files(["config.json", "config/joined.tsrg"], visibility = ["//visibility:public"])\n',
         executable = False,
     )
 
