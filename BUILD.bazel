@@ -1,8 +1,23 @@
 load("//neoform:bundle_extract.bzl", "bundle_extract")
+load("//neoform:split.bzl", "split_jar")
 
 exports_files(["rules_neoforge_tools_install.json"])
 
 bundle_extract(
     name = "extract_server",
     src = "@minecraft_1_21_1//:downloads/server.jar",
+)
+
+split_jar(
+    name = "split_client",
+    src = "@minecraft_1_21_1//:downloads/client.jar",
+    classes = "client_classes.jar",
+    resources = "client_resources.jar",
+)
+
+split_jar(
+    name = "split_server",
+    src = ":extract_server",
+    classes = "server_classes.jar",
+    resources = "server_resources.jar",
 )
