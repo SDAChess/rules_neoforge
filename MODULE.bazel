@@ -1,3 +1,54 @@
+bazel_dep(name = "rules_jvm_external", version = "7.1")
+
 minecraft = use_extension("//minecraft:extensions.bzl", "minecraft")
 minecraft.version(id = "1.21.1")
 use_repo(minecraft, "minecraft_1_21_1")
+
+neoform_repository = use_repo_rule(
+    "//neoform:repository.bzl",
+    "neoform_repository",
+)
+
+neoform_repository(
+    name = "neoform",
+    sha256 = "3fcdf0f0d115774cfceaf206a05a6dc964e2189bfd00f5b5f863e37f4b7733c7",
+    version = "1.21.1-20240808.144430",
+)
+
+maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+maven.install(
+    name = "rules_neoforge_tools",
+    lock_file = "//:rules_neoforge_tools_install.json",
+    repositories = [
+        "https://maven.neoforged.net/releases",
+        "https://repo1.maven.org/maven2",
+    ],
+)
+maven.artifact(
+    name = "rules_neoforge_tools",
+    artifact = "installertools",
+    classifier = "fatjar",
+    group = "net.neoforged.installertools",
+    version = "2.1.2",
+)
+maven.artifact(
+    name = "rules_neoforge_tools",
+    artifact = "mergetool",
+    classifier = "fatjar",
+    group = "net.neoforged",
+    version = "2.0.3",
+)
+maven.artifact(
+    name = "rules_neoforge_tools",
+    artifact = "AutoRenamingTool",
+    classifier = "all",
+    group = "net.neoforged",
+    version = "2.0.3",
+)
+maven.artifact(
+    name = "rules_neoforge_tools",
+    artifact = "vineflower",
+    group = "org.vineflower",
+    version = "1.10.1",
+)
+use_repo(maven, "rules_neoforge_tools")
