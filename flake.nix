@@ -28,8 +28,6 @@
           ...
         }:
         {
-          packages.default = pkgs.hello;
-
           devShells.default = pkgs.mkShell {
             packages = [
               pkgs.bazel_9
