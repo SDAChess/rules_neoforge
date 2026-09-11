@@ -1,4 +1,5 @@
 exports_files([
+    "BUILD.bazel.tpl",
     "download.bzl",
     "extensions.bzl",
     "repository.bzl",

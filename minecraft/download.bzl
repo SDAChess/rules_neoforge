@@ -16,6 +16,18 @@ def _schedule_download(repository_ctx, artifact, directory):
         ),
     )
 
+def _schedule_library_download(repository_ctx, library):
+    download = _schedule_download(
+        repository_ctx,
+        library["downloads"]["artifact"],
+        "libraries",
+    )
+    return struct(
+        path = download.path,
+        rules = library.get("rules", []),
+        token = download.token,
+    )
+
 def download_version_artifacts(repository_ctx, artifacts):
     return [
         _schedule_download(
@@ -28,10 +40,6 @@ def download_version_artifacts(repository_ctx, artifacts):
 
 def download_libraries(repository_ctx, libraries):
     return [
-        _schedule_download(
-            repository_ctx,
-            library["downloads"]["artifact"],
-            "libraries",
-        )
+        _schedule_library_download(repository_ctx, library)
         for library in libraries
     ]
