@@ -1,12 +1,30 @@
+load("@rules_java//java:defs.bzl", "java_import", "java_library")
 load("//neoform:bundle_extract.bzl", "bundle_extract")
 load("//neoform:decompile.bzl", "decompile_jar")
 load("//neoform:inject.bzl", "inject_sources")
 load("//neoform:merge.bzl", "merge_jars")
 load("//neoform:merge_mappings.bzl", "merge_mappings")
+load("//neoform:patch.bzl", "patch_sources")
 load("//neoform:rename.bzl", "rename_jar")
 load("//neoform:split.bzl", "split_jar")
 
 exports_files(["rules_neoforge_tools_install.json"])
+
+filegroup(
+    name = "libraries",
+    srcs = [
+        "@minecraft_1_21_1//:libraries",
+        "@rules_neoforge_tools//:ca_weblite_java_objc_bridge",
+        "@rules_neoforge_tools//:com_google_code_findbugs_jsr305",
+        "@rules_neoforge_tools//:net_neoforged_mergetool_api",
+        "@rules_neoforge_tools//:org_jetbrains_annotations",
+    ],
+)
+
+java_import(
+    name = "library_jars",
+    jars = [":libraries"],
+)
 
 bundle_extract(
     name = "extract_server",
@@ -43,18 +61,40 @@ merge_mappings(
 rename_jar(
     name = "rename",
     src = ":merge",
-    libraries = "@minecraft_1_21_1//:libraries",
+    libraries = ":libraries",
     mappings = ":merge_mappings",
 )
 
 decompile_jar(
     name = "decompile",
     src = ":rename",
-    libraries = "@minecraft_1_21_1//:libraries",
+    libraries = ":libraries",
 )
 
 inject_sources(
     name = "inject",
     src = ":decompile",
     inject = "@neoform//:inject",
+)
+
+patch_sources(
+    name = "patch",
+    src = ":inject",
+    patches = "@neoform//:neoform.zip",
+)
+
+java_library(
+    name = "recompile",
+    srcs = [":patch"],
+    javacopts = [
+        "--release",
+        "21",
+        "-proc:none",
+        "-nowarn",
+        "-g",
+        "-XDuseUnsharedTable=true",
+        "-implicit:none",
+        "-XepDisableAllChecks",
+    ],
+    deps = [":library_jars"],
 )

@@ -42,6 +42,13 @@ maven.artifact(
 )
 maven.artifact(
     name = "rules_neoforge_tools",
+    artifact = "mergetool",
+    classifier = "api",
+    group = "net.neoforged",
+    version = "2.0.3",
+)
+maven.artifact(
+    name = "rules_neoforge_tools",
     artifact = "AutoRenamingTool",
     classifier = "all",
     group = "net.neoforged",
@@ -52,5 +59,30 @@ maven.artifact(
     artifact = "vineflower",
     group = "org.vineflower",
     version = "1.10.1",
+)
+maven.artifact(
+    name = "rules_neoforge_tools",
+    artifact = "DiffPatch",
+    classifier = "all",
+    group = "codechicken",
+    version = "1.5.0.29",
+)
+maven.artifact(
+    name = "rules_neoforge_tools",
+    artifact = "jsr305",
+    group = "com.google.code.findbugs",
+    version = "3.0.2",
+)
+maven.artifact(
+    name = "rules_neoforge_tools",
+    artifact = "java-objc-bridge",
+    group = "ca.weblite",
+    version = "1.1",
+)
+maven.artifact(
+    name = "rules_neoforge_tools",
+    artifact = "annotations",
+    group = "org.jetbrains",
+    version = "24.1.0",
 )
 use_repo(maven, "rules_neoforge_tools")

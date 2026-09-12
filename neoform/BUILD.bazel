@@ -5,6 +5,7 @@ exports_files([
     "inject.bzl",
     "merge.bzl",
     "merge_mappings.bzl",
+    "patch.bzl",
     "rename.bzl",
     "repository.bzl",
     "split.bzl",

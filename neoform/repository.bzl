@@ -2,11 +2,13 @@
 
 def _neoform_repository_impl(repository_ctx):
     version = repository_ctx.attr.version
-    repository_ctx.download_and_extract(
+    repository_ctx.download(
         url = "https://maven.neoforged.net/releases/net/neoforged/neoform/%s/neoform-%s.zip" % (version, version),
+        output = "neoform.zip",
         sha256 = repository_ctx.attr.sha256,
         canonical_id = "neoform-%s" % version,
     )
+    repository_ctx.extract("neoform.zip")
 
     repository_ctx.template(
         "BUILD.bazel",

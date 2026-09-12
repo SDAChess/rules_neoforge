@@ -6,9 +6,10 @@ def _decompile_jar_impl(ctx):
     output = ctx.actions.declare_file(ctx.label.name + ".jar")
     config = ctx.actions.declare_file(ctx.label.name + ".cfg")
 
-    config_args = ctx.actions.args()
-    config_args.add_all(ctx.files.libraries, format_each = "--add-external=%s")
-    ctx.actions.write(config, config_args)
+    ctx.actions.write(
+        config,
+        "\n".join(["-e=%s" % library.path for library in ctx.files.libraries]),
+    )
 
     run_java_jar(
         ctx = ctx,
