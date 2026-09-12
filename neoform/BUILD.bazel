@@ -2,6 +2,7 @@ exports_files([
     "bundle_extract.bzl",
     "merge.bzl",
     "merge_mappings.bzl",
+    "rename.bzl",
     "repository.bzl",
     "split.bzl",
 ])
