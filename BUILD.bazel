@@ -1,4 +1,5 @@
 load("//neoform:bundle_extract.bzl", "bundle_extract")
+load("//neoform:decompile.bzl", "decompile_jar")
 load("//neoform:merge.bzl", "merge_jars")
 load("//neoform:merge_mappings.bzl", "merge_mappings")
 load("//neoform:rename.bzl", "rename_jar")
@@ -43,4 +44,10 @@ rename_jar(
     src = ":merge",
     libraries = "@minecraft_1_21_1//:libraries",
     mappings = ":merge_mappings",
+)
+
+decompile_jar(
+    name = "decompile",
+    src = ":rename",
+    libraries = "@minecraft_1_21_1//:libraries",
 )

@@ -1,5 +1,6 @@
 exports_files([
     "bundle_extract.bzl",
+    "decompile.bzl",
     "merge.bzl",
     "merge_mappings.bzl",
     "rename.bzl",
