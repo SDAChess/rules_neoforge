@@ -1,6 +1,8 @@
 exports_files([
+    "BUILD.bazel.tpl",
     "bundle_extract.bzl",
     "decompile.bzl",
+    "inject.bzl",
     "merge.bzl",
     "merge_mappings.bzl",
     "rename.bzl",

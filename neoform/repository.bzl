@@ -8,15 +8,19 @@ def _neoform_repository_impl(repository_ctx):
         canonical_id = "neoform-%s" % version,
     )
 
-    repository_ctx.file(
+    repository_ctx.template(
         "BUILD.bazel",
-        'exports_files(["config.json", "config/joined.tsrg"], visibility = ["//visibility:public"])\n',
+        repository_ctx.attr._build_template,
         executable = False,
     )
 
 neoform_repository = repository_rule(
     implementation = _neoform_repository_impl,
     attrs = {
+        "_build_template": attr.label(
+            default = Label("//neoform:BUILD.bazel.tpl"),
+            allow_single_file = True,
+        ),
         "sha256": attr.string(mandatory = True),
         "version": attr.string(mandatory = True),
     },
